@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="robots" content="index,follow"/>
+    <meta name="googlebot" content="index,follow"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>MailStrage Viewer</title>
+  </head>
+  <body>
+    <script>
+      // url base path (app)
+      //console.log(window.location);
+      var locationPathname = window.location.pathname;
+      var indexhtmlCnt = locationPathname.indexOf("index.html");
+      if (indexhtmlCnt!=-1)
+      {
+        locationPathname = locationPathname.slice(0,indexhtmlCnt);
+      }
+      var index = locationPathname.lastIndexOf("/");
+      var urlpathname = locationPathname.slice(0,index+1);
+      //console.log("urlpathname1:"+urlpathname);
+
+      // url base path
+      var urlpathnameTemp = "";
+      var index2 = urlpathname.lastIndexOf("/");
+      if (index2 != -1) {
+        urlpathnameTemp = urlpathname.slice(0,index2);
+      }
+      var index3 = urlpathnameTemp.lastIndexOf("/");
+      if (index3 != -1) {
+        urlpathnameTemp = urlpathnameTemp.slice(0,index3+1);
+      }   
+
+      var locationHref = window.location.origin + urlpathnameTemp ;
+      //console.log("locationHref:"+locationHref); 
+      
+    </script>
+    <div id="react-root"></div>
+  </body>
+</html>
