@@ -1,0 +1,35 @@
+    //org Tree
+    private JSONArray treeOrgList(JSONArray orgList, String parentId) {
+
+        JSONArray org = new JSONArray();  
+        
+        for (Object orgObj : orgList) {  
+            
+            JSONObject orgRec = JSONObject.fromObject(orgObj);  
+            
+            String organizationid = orgRec.getString("organizationid");  
+            String uporganizationid = orgRec.getString("uporganizationid");  
+            
+            if (parentId.equals(uporganizationid)) {  
+                JSONArray subOrg = treeOrgList(orgList, organizationid);  
+                orgRec.put("suborg", subOrg);  
+                org.add(orgRec);  
+            }  
+        }  
+        return org;  
+    } 
+
+	    //user List
+    private void orgList(List<OrganizationBean> srcList, List<OrganizationBean> targetList, String parentId){  
+        
+    	for(OrganizationBean orgRec : srcList){  
+    		
+            String organizationid = orgRec.getOrganizationid();  
+            String uporganizationid = orgRec.getUporganizationid();
+    		
+            if (parentId.equals(uporganizationid)){  
+            	targetList.add(orgRec);  
+            	orgList(srcList, targetList, organizationid);  
+            }  
+        }  
+    }
