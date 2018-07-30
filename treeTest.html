@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+
+<script type="text/javascript">
+var data = [{
+		'company_id':'100000',
+		'company_name':'COM_NMAE_100000',
+		'service':[
+			{
+				'service_id':'7001',
+				'service_name':'service7001',
+			},
+			{
+				'service_id':'7002',
+				'service_name':'service7002',
+			}
+		],
+		children:[
+			{
+				'company_id':'100001',
+				'company_name':'COM_NMAE_100001',
+				'service':[
+					{
+						'service_id':'7003',
+						'service_name':'service7003',
+					},
+					{
+						'service_id':'70031',
+						'service_name':'service70031',
+					}
+				],
+				children:[
+					{
+						'company_id':'200001',
+						'company_name':'COM_NMAE_200001',
+						'service':[
+							{
+								'service_id':'7004',
+								'service_name':'service7004',
+							},
+							{
+								'service_id':'7005',
+								'service_name':'service7005',
+							}
+						],
+						children:[
+							{'company_id':'300001',
+							'company_name':'COM_NMAE_300001',
+							}
+						]
+					},
+					{
+						'company_id':'200002',
+						'company_name':'COM_NMAE_200002',
+						'service':[
+							{
+								'service_id':'7006',
+								'service_name':'service7006',
+							},
+						]
+					}
+				]
+			},
+			{
+				'company_id':'100002',
+				'company_name':'COM_NMAE_100002',
+				'service':[
+					{
+						'service_id':'7003',
+						'service_name':'service7003',
+					}
+				],
+				children:[]
+			}
+		]
+	}]
+
+
+	function readtree() {
+		console.log(getArray(data, 0));
+		console.log(JSON.stringify(getArray(data, 0)));
+	}
+
+
+	// function getArray(data, level)
+    // {
+    //     for (let item of data) {
+	// 		console.log("level:" + level +", item.company_name:" + item.company_name);
+	// 		if (item && item.children && item.children.length>0) {
+	// 			 getArray(item.children, level+1);
+	// 		}
+    //     }
+    // }
+
+	// function getArray(data, level)
+    // {
+	// 	let result =[];
+    //     for (let item of data) {
+	// 		let rec_info = getRecInfo();
+
+	// 		console.log("level:" + level +", item.company_name:" + item.company_name);
+	// 		rec_info.name = item.company_name;
+
+	// 		if (item && item.children && item.children.length>0) {
+	// 			let  rec_sub_info = getArray(item.children, level+1);
+	// 			rec_info.children.push(...rec_sub_info);
+	// 			result.push(rec_info);
+	// 		} else {
+	// 			 result.push(rec_info);
+	// 		}
+    //     }
+
+	// 	return result;
+    // }	
+
+
+	function getArray(data, level)
+    {
+		let result =[];
+        for (let item of data) {
+			let rec_info = getRecInfo();
+
+			console.log("level:" + level +", item.company_name:" + item.company_name);
+			rec_info.name = item.company_name;
+
+			if (item && item.service && item.service.length>0) {
+
+				let services = item.service.map((item,index)=>{
+					let rec_service=getRecInfo();
+					rec_service.name = item.service_name;
+					return rec_service
+				})
+				rec_info.children.push(...services);
+			}
+
+			if (item && item.children && item.children.length>0) {
+				let  rec_sub_info = getArray(item.children, level+1);
+				rec_info.children.push(...rec_sub_info);
+				result.push(rec_info);
+			} else {
+				 result.push(rec_info);
+			}
+        }
+
+		return result;
+    }	
+
+	function getRecInfo () {
+		let rec = {
+			name:'',
+			url:'',
+			icon:'',
+			children:[]
+		}
+
+		return rec;
+	}
+
+</script>
+
+
+
+ </head>
+ <body>
+  <div id="" class="">
+	
+  </div>
+  <input type="button" value="test" onclick="readtree()">
+ </body>
+</html>
